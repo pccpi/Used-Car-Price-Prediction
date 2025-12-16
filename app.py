@@ -18,7 +18,9 @@ EV_MAE_EUR = 4910
 LANGS = {"Русский": "ru", "Română": "ro", "English": "en"}
 
 T = {
-    "title": {"ru": "Калькулятор стоимости авто с пробегом", "ro": "Calculator preț auto rulat", "en": "Used Car Price Calculator"},
+    # Заголовок в 2 строки
+    "title_l1": {"ru": "Калькулятор стоимости авто", "ro": "Calculator preț auto", "en": "Used Car Price"},
+    "title_l2": {"ru": "с пробегом", "ro": "rulat", "en": "Calculator"},
     "subtitle": {
         "ru": "Оценка по данным рынка Германии. Это приблизительная оценка, а не гарантированная цена.",
         "ro": "Estimare pe baza pieței din Germania. Este o estimare, nu un preț garantat.",
@@ -33,7 +35,7 @@ T = {
     "mileage": {"ru": "Пробег, км", "ro": "Kilometraj, km", "en": "Mileage, km"},
     "power": {"ru": "Мощность", "ro": "Putere", "en": "Power"},
     "power_unit": {"ru": "Единицы мощности", "ro": "Unități putere", "en": "Power unit"},
-    "transmission": {"ru": "Вид коробки передач", "ro": "Tip transmisie", "en": "Transmission type"},
+    "transmission": {"ru": "Коробка передач", "ro": "Transmisie", "en": "Transmission"},
     "fuel_type": {"ru": "Тип топлива", "ro": "Tip combustibil", "en": "Fuel type"},
     "consumption": {"ru": "Расход топлива, л/100км", "ro": "Consum, l/100km", "en": "Consumption, l/100km"},
     "calc": {"ru": "Рассчитать цену", "ro": "Calculează prețul", "en": "Calculate price"},
@@ -52,6 +54,11 @@ T = {
               "Pentru anul introdus, precizia poate fi mai mică — vârsta va fi limitată.",
         "en": "The model was trained on cars up to **{max_age} years old** (roughly not earlier than **{min_year}**). "
               "For your input, accuracy may be lower — age will be clipped.",
+    },
+    "age_penalty_note": {
+        "ru": "Дополнительно применён мягкий штраф за «лишние» годы: −3% за каждый год сверх обучающего диапазона.",
+        "ro": "S-a aplicat un „penalty” ușor pentru anii în plus: −3% pentru fiecare an peste intervalul de antrenare.",
+        "en": "A mild penalty was applied for extra years: −3% for each year beyond the training range.",
     },
     "future_year_warn": {
         "ru": "Год выпуска в будущем. Возраст будет принят как 0.",
@@ -74,33 +81,11 @@ T = {
 }
 
 
-# Значения показываем локализованно, но в модель отправляем оригинал (англ. ключи из датасета).
+# =========================
+# Локализация значений (для UI)
+# =========================
 TRANSLATE_VALUE = {
     "fuel_type": {
-        # --- гибриды на дизеле
-"Diesel hybrid": {
-    "ru": "Дизель-гибрид",
-    "ro": "Hibrid diesel",
-    "en": "Diesel hybrid",
-},
-"Diesel Hybrid": {
-    "ru": "Дизель-гибрид",
-    "ro": "Hibrid diesel",
-    "en": "Diesel hybrid",
-},
-
-# --- водород
-"Hydrogen": {
-    "ru": "Водород",
-    "ro": "Hidrogen",
-    "en": "Hydrogen",
-},
-"hydrogen": {
-    "ru": "Водород",
-    "ro": "Hidrogen",
-    "en": "Hydrogen",
-},
-
         "Petrol": {"ru": "Бензин", "ro": "Benzină", "en": "Petrol"},
         "Diesel": {"ru": "Дизель", "ro": "Motorină", "en": "Diesel"},
         "Electric": {"ru": "Электро", "ro": "Electric", "en": "Electric"},
@@ -108,24 +93,27 @@ TRANSLATE_VALUE = {
         "LPG": {"ru": "Газ (LPG)", "ro": "GPL", "en": "LPG"},
         "CNG": {"ru": "Метан (CNG)", "ro": "GNC", "en": "CNG"},
 
-        # --- Ethanol / E85 (поправил + добавил варианты)
+        # Ethanol / E85
         "Ethanol": {"ru": "Этанол (E85)", "ro": "Etanol (E85)", "en": "Ethanol (E85)"},
-        "ethanol": {"ru": "Этанол (E85)", "ro": "Etanol (E85)", "en": "Ethanol (E85)"},
         "E85": {"ru": "Этанол (E85)", "ro": "Etanol (E85)", "en": "Ethanol (E85)"},
-        "Ethanol (E85)": {"ru": "Этанол (E85)", "ro": "Etanol (E85)", "en": "Ethanol (E85)"},
         "E-85": {"ru": "Этанол (E85)", "ro": "Etanol (E85)", "en": "Ethanol (E85)"},
+        "Ethanol (E85)": {"ru": "Этанол (E85)", "ro": "Etanol (E85)", "en": "Ethanol (E85)"},
+
+        # Diesel hybrid
+        "Diesel hybrid": {"ru": "Дизель-гибрид", "ro": "Hibrid diesel", "en": "Diesel hybrid"},
+        "Diesel Hybrid": {"ru": "Дизель-гибрид", "ro": "Hibrid diesel", "en": "Diesel hybrid"},
+
+        # Hydrogen
+        "Hydrogen": {"ru": "Водород", "ro": "Hidrogen", "en": "Hydrogen"},
+        "Hydrogen fuel cell": {"ru": "Водород (топливный элемент)", "ro": "Hidrogen (celulă)", "en": "Hydrogen fuel cell"},
     },
     "transmission_type": {
         "Manual": {"ru": "Механика", "ro": "Manuală", "en": "Manual"},
         "Automatic": {"ru": "Автомат", "ro": "Automată", "en": "Automatic"},
         "Semi-automatic": {"ru": "Полуавтомат", "ro": "Semi-automată", "en": "Semi-automatic"},
+        "Unknown": {"ru": "Не указано", "ro": "Necunoscut", "en": "Unknown"},
     },
     "color": {
-        "bronze": {
-    "ru": "Бронзовый",
-    "ro": "Bronz",
-    "en": "Bronze",
-},
         "black": {"ru": "Чёрный", "ro": "Negru", "en": "Black"},
         "white": {"ru": "Белый", "ro": "Alb", "en": "White"},
         "silver": {"ru": "Серебристый", "ro": "Argintiu", "en": "Silver"},
@@ -139,10 +127,10 @@ TRANSLATE_VALUE = {
         "beige": {"ru": "Бежевый", "ro": "Bej", "en": "Beige"},
         "violet": {"ru": "Фиолетовый", "ro": "Violet", "en": "Violet"},
         "gold": {"ru": "Золотой", "ro": "Auriu", "en": "Gold"},
+        "bronze": {"ru": "Бронзовый", "ro": "Bronz", "en": "Bronze"},
     },
 }
 
-# Локализованные подписи для единиц мощности (в код отправляем 'kW' или 'PS')
 POWER_UNITS_UI = {
     "ru": [("kW", "kW"), ("PS", "л.с. (PS)")],
     "ro": [("kW", "kW"), ("PS", "CP (PS)")],
@@ -150,6 +138,9 @@ POWER_UNITS_UI = {
 }
 
 
+# =========================
+# Утилиты
+# =========================
 def tr(key: str, lang: str) -> str:
     return T.get(key, {}).get(lang, key)
 
@@ -170,29 +161,38 @@ def pretty_title(s: str) -> str:
     return s[:1].upper() + s[1:]
 
 
+def is_unknown(v: str) -> bool:
+    return str(v).strip().lower() in {"unknown", "nan", "none", ""}
+
+
+def filter_unknown(items: list[str]) -> list[str]:
+    return [x for x in items if not is_unknown(x)]
+
+
 def translate_value(field: str, value: str, lang: str) -> str:
     v = str(value).strip()
     if not v:
         return v
 
-    # цвета в датасете часто lower()
     if field == "color":
         key = v.lower()
         return TRANSLATE_VALUE.get(field, {}).get(key, {}).get(lang, pretty_title(v))
 
-    # fuel_type — иногда встречаются варианты типа "ethanol", "E-85" и т.п.
     if field == "fuel_type":
-        # пробуем сначала как есть, потом "нормализованные"
-        for k in [v, v.strip(), v.replace("_", " "), v.replace("-", "-"), v.upper(), v.title()]:
-            if k in TRANSLATE_VALUE["fuel_type"]:
-                return TRANSLATE_VALUE["fuel_type"][k].get(lang, pretty_title(v))
-        # ещё один шанс — по lower ключу
-        low = v.lower()
-        if low in TRANSLATE_VALUE["fuel_type"]:
-            return TRANSLATE_VALUE["fuel_type"][low].get(lang, pretty_title(v))
+        # нормализация: сравниваем "мягко", чтобы не плодить варианты
+        v_norm = v.strip().lower().replace("_", " ").replace("-", " ")
+        for key, langs in TRANSLATE_VALUE["fuel_type"].items():
+            k_norm = str(key).lower().replace("_", " ").replace("-", " ")
+            if v_norm == k_norm:
+                return langs.get(lang, pretty_title(v))
         return pretty_title(v)
 
-    return TRANSLATE_VALUE.get(field, {}).get(v, {}).get(lang, pretty_title(v))
+    if field == "transmission_type":
+        if is_unknown(v):
+            return TRANSLATE_VALUE["transmission_type"]["Unknown"].get(lang, "Unknown")
+        return TRANSLATE_VALUE.get(field, {}).get(v, {}).get(lang, pretty_title(v))
+
+    return pretty_title(v)
 
 
 def sort_by_ui(items: list[str], field: str, lang: str) -> list[str]:
@@ -222,7 +222,7 @@ def _find_file(filename: str) -> Path:
         if p.exists():
             return p
 
-    # fallback: если файл называется "ice_bundle (1).joblib"
+    # fallback: "ice_bundle (1).joblib"
     stem = Path(filename).stem
     suffix = Path(filename).suffix
     for folder in [APP_DIR, APP_DIR / "models", APP_DIR / "artifacts", APP_DIR / "model"]:
@@ -255,7 +255,7 @@ def load_reference_frames():
 
 def build_refs(df_ref: pd.DataFrame | None):
     brands, colors, transmissions, fuel_types = [], [], [], []
-    models_by_brand = {}
+    models_by_brand: dict[str, list[str]] = {}
 
     if df_ref is None:
         return brands, models_by_brand, colors, transmissions, fuel_types
@@ -271,7 +271,7 @@ def build_refs(df_ref: pd.DataFrame | None):
     if "brand" in df.columns and "model" in df.columns:
         tmp = df[["brand", "model"]].dropna()
         for b, grp in tmp.groupby("brand"):
-            models_by_brand[b] = sorted(grp["model"].unique().tolist(), key=lambda x: x.lower())
+            models_by_brand[str(b)] = sorted(grp["model"].unique().tolist(), key=lambda x: x.lower())
 
     if "color" in df.columns:
         colors = sorted(df["color"].dropna().unique().tolist(), key=lambda x: str(x).lower())
@@ -296,13 +296,17 @@ def predict_with_bundle(bundle: dict, features: dict) -> float:
 # =========================
 # UI
 # =========================
-st.set_page_config(page_title="Used Car Calculator", page_icon="🚗", layout="centered")
+st.set_page_config(page_title="Used Car Price", page_icon="🚗", layout="centered")
 
 with st.sidebar:
     lang_name = st.selectbox("Language / Limba / Язык", list(LANGS.keys()), index=0)
 lang = LANGS[lang_name]
 
-st.title("🚗 " + tr("title", lang))
+# Заголовок в 2 строки
+st.markdown(
+    f"<h2 style='margin-bottom:0'>{tr('title_l1', lang)}<br>{tr('title_l2', lang)}</h2>",
+    unsafe_allow_html=True,
+)
 st.caption(tr("subtitle", lang))
 
 try:
@@ -336,20 +340,24 @@ if df_ref is None:
 
 brands, models_by_brand, colors, transmissions, fuel_types = build_refs(df_ref)
 
-# Полировка сортировки: по алфавиту выбранного языка (для UI)
+# Полировка: сортировка по алфавиту ВЫБРАННОГО языка (для UI)
 if colors:
     colors = sort_by_ui(colors, "color", lang)
+
+# Коробка: Unknown скрываем в UI, но сохраняем как fallback
+transmissions = filter_unknown(transmissions)
 if transmissions:
     transmissions = sort_by_ui(transmissions, "transmission_type", lang)
+
 if fuel_types:
     fuel_types = sort_by_ui(fuel_types, "fuel_type", lang)
 
 # =========================
 # Все поля в одном красивом блоке,
-# но марка/модель остаются "живыми" (вне формы)
+# но марка/модель реагируют сразу (вне формы)
 # =========================
 with st.container(border=True):
-    # 1) Марка/модель — реагируют сразу
+    # 1) Марка/модель
     top1, top2 = st.columns(2)
 
     with top1:
@@ -374,7 +382,7 @@ with st.container(border=True):
 
     st.write("")
 
-    # 2) Остальные поля — в форме (кнопка "Рассчитать")
+    # 2) Остальные поля — в форме
     with st.form("car_form", clear_on_submit=False):
         c1, c2 = st.columns(2)
 
@@ -389,15 +397,41 @@ with st.container(border=True):
             else:
                 color = st.text_input(tr("color", lang), value="black", key=f"color_text_{mode_key}")
 
-            if transmissions:
+            # Коробка передач: ICE/EV
+            if is_ev:
+                ev_trans_opts = transmissions[:] if transmissions else ["Automatic", "Manual", "Semi-automatic"]
+                ev_trans_opts = filter_unknown(ev_trans_opts)
+
+                if len(ev_trans_opts) == 1:
+                    transmission = ev_trans_opts[0]
+                    st.selectbox(
+                        tr("transmission", lang),
+                        ev_trans_opts,
+                        index=0,
+                        format_func=lambda x: translate_value("transmission_type", x, lang),
+                        disabled=True,
+                        key=f"trans_{mode_key}",
+                    )
+                else:
+                    idx = ev_trans_opts.index("Automatic") if "Automatic" in ev_trans_opts else 0
+                    transmission = st.selectbox(
+                        tr("transmission", lang),
+                        ev_trans_opts,
+                        index=idx,
+                        format_func=lambda x: translate_value("transmission_type", x, lang),
+                        key=f"trans_{mode_key}",
+                    )
+            else:
+                ice_trans_opts = transmissions[:] if transmissions else ["Manual", "Automatic", "Semi-automatic"]
+                ice_trans_opts = filter_unknown(ice_trans_opts)
+                idx = ice_trans_opts.index("Manual") if "Manual" in ice_trans_opts else 0
                 transmission = st.selectbox(
                     tr("transmission", lang),
-                    transmissions,
+                    ice_trans_opts,
+                    index=idx,
                     format_func=lambda x: translate_value("transmission_type", x, lang),
                     key=f"trans_{mode_key}",
                 )
-            else:
-                transmission = st.text_input(tr("transmission", lang), value="Automatic", key=f"trans_text_{mode_key}")
 
         with c2:
             year = st.number_input(
@@ -437,8 +471,8 @@ with st.container(border=True):
 
         c3, _ = st.columns(2)
         with c3:
+            # Топливо: EV фиксируем Electric (и дизейблим), ICE — выбор, но всё локализовано
             if is_ev:
-                # Для EV фиксируем Electric (чтобы выглядело аккуратно и не путало)
                 fuel_type = "Electric"
                 st.selectbox(
                     tr("fuel_type", lang),
@@ -449,8 +483,7 @@ with st.container(border=True):
                     key=f"fuel_{mode_key}",
                 )
             else:
-                # Если референса нет — дадим дефолтный набор
-                fuel_options = fuel_types if fuel_types else ["Petrol", "Diesel", "Hybrid", "LPG", "CNG", "Ethanol"]
+                fuel_options = fuel_types if fuel_types else ["Petrol", "Diesel", "Hybrid", "LPG", "CNG", "Ethanol", "Hydrogen", "Diesel hybrid"]
                 fuel_type = st.selectbox(
                     tr("fuel_type", lang),
                     fuel_options,
@@ -503,10 +536,14 @@ if submitted:
             min_year_allowed = current_year - max_train_age
             st.warning(tr("age_clip_warn", lang).format(max_age=max_train_age, min_year=min_year_allowed))
 
+    # Фолбэк по коробке: UI скрывает Unknown, но модель его понимает
+    if is_unknown(transmission):
+        transmission = "Unknown"
+
     features = {
-        "brand": str(brand).strip(),  # бренды/модели не переводим
-        "model": str(model_name).strip(),
-        "color": str(color).strip(),
+        "brand": str(brand).strip(),          # не переводим
+        "model": str(model_name).strip(),     # не переводим
+        "color": str(color).strip(),          # из датасета (обычно lower)
         "car_age": int(age_used),
         "mileage_in_km": float(mileage),
         "power_kw": float(power_kw),
@@ -523,9 +560,11 @@ if submitted:
         st.exception(e)
         st.stop()
 
-    # Мягкий штраф за «старше, чем модель знает» (вариант B)
+    # Мягкий штраф за «лишние» годы
+    penalty_applied = False
     if extra_years > 0:
         price *= (0.97 ** extra_years)
+        penalty_applied = True
 
     price_round = int(round(price))
     low = int(max(0, round(price - mae)))
@@ -536,6 +575,8 @@ if submitted:
         f"{tr('range', lang)}: **{low:,} – {high:,} €**".replace(",", " ")
         + f"\n\n{tr('range_note', lang)}"
     )
+    if penalty_applied:
+        st.caption(tr("age_penalty_note", lang))
 
     with st.expander(tr("features_sent", lang)):
         debug = dict(features)
